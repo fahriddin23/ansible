@@ -1,0 +1,24 @@
+---
+- name: Install Apache on CentOS 8
+  hosts: localhost
+  become: true               
+  
+  tasks:
+    - name: Install Apache
+      dnf:
+        name: httpd           
+        state: latest        
+
+    - name: Start and Enable Apache
+      systemd:
+        name: httpd           
+        state: started        
+        enabled: yes
+
+    - name: Create Apache
+      file:
+        path: /var/www/index.html
+        state: touch
+        owner: apache
+        group: apache
+        mode: 0644              
